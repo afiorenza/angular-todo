@@ -11,27 +11,29 @@ var	run = require('run-sequence');
 var	sass = require('gulp-sass');
 var	source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
+var templateCache = require('gulp-angular-templatecache');
 
 var settings = {
     js: {
-        main: './source/index.js',
+        main: 'source/index.js',
         name: 'app.js',
         watch: [
             'source/**/*.js'
         ]
     },
     html: {
-        main: './source/index.html',
+        main: 'source/index.html',
         name: 'index.html',
+        templates: 'source/templates/**/*.html',
         watch: [
-            'source/**/*.html'
+            'source/templates/**/*.html'
         ]
     },
     css: {
-        main: './styles/style.scss',
+        main: 'source/**/*.scss',
         name: 'style.css',
         watch: [
-            'styles/**/*.scss'
+            'source/**/*.scss'
         ]
     },
     dest: './dist/'
@@ -50,13 +52,23 @@ gulp.task('html', function () {
 
 gulp.task('html-watch', ['html'], browserSync.reload);
 
+gulp.task('html-templates', function () {
+    gulp
+        .src(settings.html.templates)
+        .pipe(templateCache())
+        .pipe(gulp.dest(settings.dest));
+});
+
+gulp.task('html-templates-watch', ['html-templates'], browserSync.reload);
+
 gulp.task('js', function() {
-    var b = browserify({
-        entries: settings.js.main,
-        debug: true
+    var bundle = browserify({
+        debug: true,
+        entries: settings.js.main
     });
 
-    return b.bundle()
+    return bundle.bundle()
+        .on('error', handleError)
         .pipe(source(settings.js.name))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
@@ -69,8 +81,7 @@ gulp.task('js-watch', ['js'], browserSync.reload);
 gulp.task('css', function () {
     gulp
         .src(settings.css.main)
-        .pipe(sass())
-        .on('error', handleError)
+        .pipe(sass().on('error', handleError))
         .pipe(concat(settings.css.name))
         .pipe(gulp.dest(settings.dest));
 });
@@ -85,7 +96,8 @@ gulp.task('browser-sync', function () {
         port: '8080'
     });
 
-    gulp.watch(settings.html.watch, ['html-watch']);
+    gulp.watch(settings.html.main, ['html-watch']);
+    gulp.watch(settings.html.watch, ['html-templates-watch']);
     gulp.watch(settings.css.watch, ['css-watch']);
     gulp.watch(settings.js.watch, ['js-watch']);
 });
@@ -95,5 +107,5 @@ gulp.task('clean', function () {
 });
 
 gulp.task('default', ['clean'], function () {
-    run('html', 'js', 'css', 'browser-sync');
+    run('html', 'html-templates', 'js', 'css', 'browser-sync');
 });

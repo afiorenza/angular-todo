@@ -1,0 +1,10 @@
+<div ng-controller="HomeController">
+    <button ng-click="add()">+</button>
+    <button ng-click="subtract()">-</button>
+    <button ng-click="showCount()">show</button>
+    <br />
+    <br />
+    <div ng-if="show">
+        <div>Count: {{ count | currency }}</div>
+    </div>
+</div>

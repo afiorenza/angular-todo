@@ -1,15 +1,6 @@
-module.exports = function ($http, $templateCache) {
-
-    $http.get('home.html', {cache: $templateCache})
-        .then(function (algo) {
-            console.log('****', algo);
-
-        })
-        .catch(function (error) {
-            console.log('error ', error);
-        });
+module.exports = function ($templateCache) {
     return {
         restrict: 'E',
-        template: '<div>aaaaaaaaaaaaaa</div>'
+        template: $templateCache.get('home.html')
     };
 };

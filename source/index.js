@@ -1,4 +1,5 @@
 var angular = require('angular');
+
 // var ngRoute = require('angular-router');
 
 // Controllers
@@ -15,6 +16,6 @@ var app = angular.module('myApp', [ /* 'ngRoute' */ ]);
 
 // routes.initialize(app);
 
-app.directive('homeeee', ['$http', '$templateCache', homeDirective]);
+app.directive('home', ['$templateCache', homeDirective]);
 app.controller('FormController', formController);
 app.controller('HomeController', homeController);

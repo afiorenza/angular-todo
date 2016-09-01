@@ -1,4 +1,4 @@
-        {
+{
   "name": "angular-todo",
   "version": "1.0.0",
   "description": "",
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "add-stream": "^1.0.0",
     "angular": "^1.5.8",
     "angular-router": "0.0.2",
     "browser-sync": "^2.14.0",

@@ -55,7 +55,9 @@ gulp.task('html-watch', ['html'], browserSync.reload);
 gulp.task('html-templates', function () {
     gulp
         .src(settings.html.templates)
-        .pipe(templateCache())
+        .pipe(templateCache({
+            module: 'myApp'
+        }))
         .pipe(gulp.dest(settings.dest));
 });
 
@@ -72,7 +74,7 @@ gulp.task('js', function() {
         .pipe(source(settings.js.name))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(sourcemaps.write('./'))
+        // .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(settings.dest));
 });
 

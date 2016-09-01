@@ -1,14 +1,20 @@
+var ngRoute = require('angular-route');
+
 // Controllers
-var homeController = require('../controllers/home-controller');
+var exampleController = require('../controllers/example');
 
-module.exports.initialize = function (app) {
+module.exports.initialize = function () {
+    var app = angular.module('myApp', [ngRoute]);
 
-    app.config(['$routeProvider', function ($routeProvider, $locationProvider) {
+    app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+
         $routeProvider
-            .when('/', {
-                templateUrl: 'templates/home.html',
-                controller: 'homeController'
+            .when('/example', {
+                templateUrl: 'example.html'
             })
+            .otherwise({
+                redirectTo: '/'
+            });
 
         $locationProvider.html5Mode(true);
     }]);

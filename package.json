@@ -6,17 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository" :
-  {
-    "type" : "git",
-    "url" : "https://github.com/afiorenza/angular-todo.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/afiorenza/angular-todo.git"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "add-stream": "^1.0.0",
     "angular": "^1.5.8",
-    "angular-router": "0.0.2",
+    "angular-route": "^1.5.8",
     "browser-sync": "^2.14.0",
     "browserify": "^13.1.0",
     "connect-livereload": "^0.5.4",

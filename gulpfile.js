@@ -36,6 +36,13 @@ var settings = {
             'source/**/*.scss'
         ]
     },
+    assets: {
+        dest: 'assets',
+        main: 'assets/**/',
+        watch: [
+            'assets/**/*.*'
+        ]
+    },
     dest: './dist/'
 };
 
@@ -90,6 +97,14 @@ gulp.task('css', function () {
 
 gulp.task('css-watch', ['css'], browserSync.reload);
 
+gulp.task('move-assets', function () {
+    gulp
+        .src(settings.assets.main)
+        .pipe(gulp.dest(settings.dest + settings.assets.dest));
+});
+
+gulp.task('assets-watch', ['move-assets'], browserSync.reload);
+
 gulp.task('browser-sync', function () {
     browserSync.init({
         server: {
@@ -102,6 +117,7 @@ gulp.task('browser-sync', function () {
     gulp.watch(settings.html.watch, ['html-templates-watch']);
     gulp.watch(settings.css.watch, ['css-watch']);
     gulp.watch(settings.js.watch, ['js-watch']);
+    gulp.watch(settings.assets.watch, ['assets-watch']);
 });
 
 gulp.task('clean', function () {
@@ -109,5 +125,5 @@ gulp.task('clean', function () {
 });
 
 gulp.task('default', ['clean'], function () {
-    run('html', 'html-templates', 'js', 'css', 'browser-sync');
+    run('html', 'html-templates', 'js', 'css', 'move-assets', 'browser-sync');
 });

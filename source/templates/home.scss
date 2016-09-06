@@ -1,3 +1,18 @@
 .home {
     padding: 20px;
+
+    &--todo-list {
+
+        .todo-list {
+
+            &--item {
+                font-size: 22px;
+            }
+
+            .odd {
+                border-color: gray;
+                font-weight: bold;
+            }
+        }
+    }
 }

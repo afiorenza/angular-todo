@@ -4,6 +4,9 @@ var angular = require('angular');
 var homeDirective = require('./directives/home');
 var navbarDirective = require('./directives/navbar');
 
+// Services
+var todoFactory = require('./services/todo');
+
 // Routes
 var routes = require('./routes/routes');
 
@@ -13,3 +16,4 @@ routes.initialize();
 
 homeDirective.instanciate();
 navbarDirective.instanciate();
+todoFactory.instanciate();

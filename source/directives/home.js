@@ -1,5 +1,5 @@
 module.exports.instanciate = function () {
-    var app = angular.module('myApp');
+    var app = angular.module('myApp', ['myApp.services']);
 
     app.directive('home', ['$templateCache', function ($templateCache) {
         return {
@@ -7,21 +7,11 @@ module.exports.instanciate = function () {
             template: $templateCache.get('home.html')
         };
     }])
-    .controller('HomeController', function ($scope) {
-        $scope.count = 0;
-        $scope.show = true;
+    .controller('HomeController', function ($scope, TodoService) {
+        $scope.todos = TodoService.getTodos();
 
-        $scope.add = function () {
-            $scope.count = $scope.count + 1;
+        $scope.handleListClick = function (index, event) {
+            TodoService.updateTodo(index, event.target.checked);
         };
-
-        $scope.subtract = function () {
-            $scope.count = $scope.count - 1;
-        };
-
-        $scope.showCount = function () {
-            $scope.show = (!$scope.show);
-        }
-
     });
 };

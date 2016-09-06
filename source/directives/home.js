@@ -5,7 +5,7 @@ module.exports.instanciate = function () {
         return {
             restrict: 'E',
             template: $templateCache.get('home.html')
-        }
+        };
     }])
     .controller('HomeController', function ($scope) {
         $scope.count = 0;

@@ -1,0 +1,20 @@
+.navbar {
+    padding: 10px 30px;
+    border-bottom: 1px solid gray;
+
+    &--brand-logo,
+    &--title {
+        display: inline-block;
+    }
+
+    &--brand-logo {
+        height: 70px;
+        width: 70px;
+    }
+
+    &--title {
+        vertical-align: bottom;
+        margin-left: 10px;
+        text-transform: uppercase;
+    }
+}

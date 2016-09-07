@@ -1,32 +1,31 @@
 module.exports.instanciate = function() {
+    var _ = require('lodash');
+
+    var TODOS = 'todos';
+    var mockData = [
+        {
+            description: 'Item 1',
+            done: false
+        },
+        {
+            description: 'Item 2',
+            done: true
+        },
+        {
+            description: 'Item 3',
+            done: false
+        }
+    ];
 
     angular.module('myApp.services', []).factory('TodoService', [function () {
-        var todos = [
-            {
-                description: 'Item 1',
-                done: false
-            },
-            {
-                description: 'Item 1',
-                done: true
-            },
-            {
-                description: 'Item 1',
-                done: false
-            },
-            {
-                description: 'Item 1',
-                done: true
-            },
-            {
-                description: 'Item 1',
-                done: false
-            }
-        ];
+
+        if (_.isEmpty(localStorage.getItem(TODOS))) {
+            saveToLocalStorage(mockData);
+        }
 
         return {
             getTodos: function () {
-                return todos;
+                return getFromLocalStorage();
             },
 
             getTodo: function (index) {
@@ -38,8 +37,20 @@ module.exports.instanciate = function() {
             },
 
             updateTodo: function (index, done) {
+                var todos = getFromLocalStorage();
+
                 todos[index].done = done;
+
+                saveToLocalStorage(todos);
             }
+        };
+
+        function saveToLocalStorage (todos) {
+            localStorage.setItem(TODOS, JSON.stringify(todos));
+        };
+
+        function getFromLocalStorage () {
+            return JSON.parse(localStorage.getItem(TODOS));
         };
     }]);
 };

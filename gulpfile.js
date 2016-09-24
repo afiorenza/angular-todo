@@ -6,6 +6,7 @@ var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var nodemon = require('gulp-nodemon');
 var rimraf = require('rimraf');
 var	run = require('run-sequence');
 var	sass = require('gulp-sass');
@@ -105,12 +106,10 @@ gulp.task('move-assets', function () {
 
 gulp.task('assets-watch', ['move-assets'], browserSync.reload);
 
-gulp.task('browser-sync', function () {
-    browserSync.init({
-        server: {
-            baseDir: settings.dest
-        },
-        port: '8080'
+gulp.task('browser-sync', ['start-server'], function () {
+    browserSync({
+        port: '8082',
+        proxy: 'http://localhost:8080'
     });
 
     gulp.watch(settings.html.main, ['html-watch']);
@@ -119,6 +118,21 @@ gulp.task('browser-sync', function () {
     gulp.watch(settings.js.watch, ['js-watch']);
     gulp.watch(settings.assets.watch, ['assets-watch']);
 });
+
+gulp.task('start-server', function (cb) {
+    var called = false;
+
+    return nodemon({
+        ignore: [settings.dest, settings.source],
+        script: 'server.js'
+    }).on('start', function () {
+		if (!called) {
+			called = true;
+			cb();
+		}
+	});
+});
+
 
 gulp.task('clean', function () {
     rimraf('./dist', function (error, stdout, stderr) {});

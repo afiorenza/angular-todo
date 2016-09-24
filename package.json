@@ -28,6 +28,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-embedlr": "^0.5.2",
     "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.1.0",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",

@@ -3,10 +3,12 @@ var angular = require('angular');
 var ngRoute = require('angular-route');
 
 // DIRECTIVES
+var controlDirective = require('./directives/control');
 var homeDirective = require('./directives/home');
 var navbarDirective = require('./directives/navbar');
 
 // CONTROLLERS
+var controlController = require('./controllers/control');
 var homeController = require('./controllers/home');
 var navbarController = require('./controllers/navbar');
 
@@ -30,5 +32,6 @@ services.factory('TodoService', todoFactory);
 
 var directives = angular.module('myApp.directives', []);
 
+directives.directive('control', ['$templateCache', controlDirective]).controller('ControlController', controlController);
 directives.directive('home', ['$templateCache', homeDirective]).controller('HomeController', homeController);
 directives.directive('navbar', ['$templateCache', navbarDirective]).controller('NavbarController', navbarController);

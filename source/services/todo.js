@@ -1,26 +1,27 @@
-module.exports = function() {
-    var _ = require('lodash');
+// VENDOR LIBS
+var _ = require('lodash');
+var moment = require('moment');
 
-    var TODOS = 'todos';
-    var mockData = [
-        {
-            description: 'Item 1',
-            done: false
-        },
-        {
-            description: 'Item 2',
-            done: true
-        },
-        {
-            description: 'Item 3',
-            done: true
-        }
-    ];
+var CHANGE = 'change'
+var TODOS = 'todos';
 
-    if (_.isEmpty(localStorage.getItem(TODOS))) {
-        saveToLocalStorage(mockData);
+function saveToLocalStorage (todos) {
+    localStorage.setItem(TODOS, JSON.stringify(todos));
+};
+
+function getFromLocalStorage () {
+    var todos = localStorage.getItem(TODOS);
+
+    if (_.isEmpty(todos)) {
+        todos = {};
+    } else {
+        todos = JSON.parse(todos);
     }
 
+    return todos;
+};
+
+var todoFactory = function ($rootScope) {
     return {
         getTodos: function () {
             return getFromLocalStorage();
@@ -31,7 +32,14 @@ module.exports = function() {
         },
 
         setTodo: function (todo) {
-            todos.push(todo);
+            var todos = getFromLocalStorage();
+            var dateTime = moment().format();
+
+            todos[dateTime] = todo;
+
+            saveToLocalStorage(todos);
+
+            $rootScope.$emit(CHANGE);
         },
 
         updateTodo: function (index, done) {
@@ -42,12 +50,6 @@ module.exports = function() {
             saveToLocalStorage(todos);
         }
     };
-
-    function saveToLocalStorage (todos) {
-        localStorage.setItem(TODOS, JSON.stringify(todos));
-    };
-
-    function getFromLocalStorage () {
-        return JSON.parse(localStorage.getItem(TODOS));
-    };
 };
+
+module.exports = todoFactory;

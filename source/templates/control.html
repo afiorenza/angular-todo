@@ -1,0 +1,12 @@
+<div class="control" ng-controller="ControlController" ng-submit="addTodo()">
+    <form class="control-form">
+        <input type="text" ng-model="nextTodo" value="" class="form--todo-input">
+    </form>
+
+    <div class="control-filter">
+        <label class="done-filter">
+            <input class="done-filter--input" type="checkbox" ng-checked="" ng-click="handleDoneFilterClick($event)">
+            <span>Done</span>
+        </label>
+    </div>
+</div>

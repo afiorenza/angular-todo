@@ -1,17 +1,43 @@
 .home {
+    display: table-cell;
     padding: 20px;
+    text-align: center;
 
-    &--todo-list {
+    &--wrapper {
+        margin-left: auto;
+        margin-right: auto;
+        width: 30%;
 
-        .todo-list {
+        .home {
 
-            &--item {
-                font-size: 22px;
-            }
+            &--todo-list {
+                padding: 0;
 
-            .odd {
-                border-color: gray;
-                font-weight: bold;
+                .todo-list {
+
+                    &--item {
+                        margin-bottom: 5px;
+                        text-align: initial;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: 100%;
+
+                        .item {
+
+                            &--description {
+                                font-size: 22px;
+                            }
+
+                            &--date {
+                                color: gray;
+                                display: block;
+                                font-size: 12px;
+                                margin-left: 20px;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

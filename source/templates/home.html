@@ -1,13 +1,14 @@
 <div class="home" ng-controller="HomeController">
-    <div class=""></div>
-
-    <ul class="home--todo-list">
-        <li ng-repeat="todo in todos" ng-class="{even: !$even, odd: !$odd}">
-            <label class="todo-list--item">
-                <input type="checkbox" ng-checked="todo.done" ng-click="handleListClick($index, $event)">
-                {{ todo.description }}
-            </label>
-        </li>
-    </ul>
-
+    <div class="home--wrapper">
+        <control></control>
+        <ul class="home--todo-list">
+            <li class="todo-list--item" ng-repeat="(key, todo) in todos" ng-class="{even: !$even, odd: !$odd}">
+                <label class="item--description">
+                    <input type="checkbox" ng-checked="todo.done" ng-click="handleListClick($index, $event)">
+                    {{ todo.description }}
+                </label>
+                <span class="item--date">{{ key | date:'medium' }}</span>
+            </li>
+        </ul>
+    </div>
 </div>

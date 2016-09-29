@@ -1,19 +1,34 @@
+// VENDOR LIBS
 var angular = require('angular');
+var ngRoute = require('angular-route');
 
-// Directives
+// DIRECTIVES
 var homeDirective = require('./directives/home');
 var navbarDirective = require('./directives/navbar');
 
-// Services
+// CONTROLLERS
+var homeController = require('./controllers/home');
+var navbarController = require('./controllers/navbar');
+
+// SERVICES
 var todoFactory = require('./services/todo');
 
-// Routes
+// ROUTES
 var routes = require('./routes/routes');
 
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', [
+    'myApp.directives',
+    'myApp.services',
+    ngRoute
+]);
 
-routes.initialize();
+routes.initialize(app);
 
-homeDirective.instanciate();
-navbarDirective.instanciate();
-todoFactory.instanciate();
+var services = angular.module('myApp.services', []);
+
+services.factory('TodoService', todoFactory);
+
+var directives = angular.module('myApp.directives', []);
+
+directives.directive('home', ['$templateCache', homeDirective]).controller('HomeController', homeController);
+directives.directive('navbar', ['$templateCache', navbarDirective]).controller('NavbarController', navbarController);

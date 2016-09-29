@@ -27,6 +27,7 @@ var settings = {
         name: 'index.html',
         templates: 'source/templates/**/*.html',
         watch: [
+            'source/index.html',
             'source/templates/**/*.html'
         ]
     },

@@ -1,4 +1,4 @@
-module.exports.instanciate = function() {
+module.exports = function() {
     var _ = require('lodash');
 
     var TODOS = 'todos';
@@ -13,44 +13,41 @@ module.exports.instanciate = function() {
         },
         {
             description: 'Item 3',
-            done: false
+            done: true
         }
     ];
 
-    angular.module('myApp.services', []).factory('TodoService', [function () {
+    if (_.isEmpty(localStorage.getItem(TODOS))) {
+        saveToLocalStorage(mockData);
+    }
 
-        if (_.isEmpty(localStorage.getItem(TODOS))) {
-            saveToLocalStorage(mockData);
+    return {
+        getTodos: function () {
+            return getFromLocalStorage();
+        },
+
+        getTodo: function (index) {
+            return todos[index];
+        },
+
+        setTodo: function (todo) {
+            todos.push(todo);
+        },
+
+        updateTodo: function (index, done) {
+            var todos = getFromLocalStorage();
+
+            todos[index].done = done;
+
+            saveToLocalStorage(todos);
         }
+    };
 
-        return {
-            getTodos: function () {
-                return getFromLocalStorage();
-            },
+    function saveToLocalStorage (todos) {
+        localStorage.setItem(TODOS, JSON.stringify(todos));
+    };
 
-            getTodo: function (index) {
-                return todos[index];
-            },
-
-            setTodo: function (todo) {
-                todos.push(todo);
-            },
-
-            updateTodo: function (index, done) {
-                var todos = getFromLocalStorage();
-
-                todos[index].done = done;
-
-                saveToLocalStorage(todos);
-            }
-        };
-
-        function saveToLocalStorage (todos) {
-            localStorage.setItem(TODOS, JSON.stringify(todos));
-        };
-
-        function getFromLocalStorage () {
-            return JSON.parse(localStorage.getItem(TODOS));
-        };
-    }]);
+    function getFromLocalStorage () {
+        return JSON.parse(localStorage.getItem(TODOS));
+    };
 };
